@@ -214,6 +214,10 @@ func! AutoPairsInsert(key)
     let ms = s:matchend(before.a:key, open)
     let m = matchstr(afterline, '^\v\s*\zs\V'.close)
     if len(ms) > 0
+      " Do not auto-pair if cursor is immediately adjacent to non-whitespace
+      if afterline[0:0] =~ '\S'
+        return a:key
+      end
       " process the open pair
       
       " remove inserted pair
